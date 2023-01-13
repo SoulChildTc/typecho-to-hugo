@@ -232,8 +232,9 @@ func mdHandler(article Article) string {
 	// 图片路径修改及删除多余文本
 	re = regexp.MustCompile(`http.*?(usr|wp-content)/uploads/\d{4}/\d{2}/(.*?\.(png|jpg|jpeg))`)
 	for _, match := range re.FindAllStringSubmatch(article.Content.Text, -1) {
+		originPath := match[0]
 		newPath := "images/" + match[2]
-		article.Content.Text = re.ReplaceAllString(article.Content.Text, newPath)
+		article.Content.Text = strings.Replace(article.Content.Text, originPath, newPath, -1)
 	}
 	//article.Content.Text = strings.Replace(article.Content.Text, "https://soulchild.cn/usr/uploads/", "usr/uploads/", -1)
 	//article.Content.Text = strings.Replace(article.Content.Text, "https://www.soulchild.cn/usr/uploads/", "usr/uploads/", -1)
